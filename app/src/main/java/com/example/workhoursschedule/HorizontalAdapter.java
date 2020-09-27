@@ -35,6 +35,7 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textView.setText(horizontal_layout_models.get(position).getMonthNames());
+        holder.itemView.setOnClickListener(v -> {holder.textView.setText(R.string.test);});
     }
 
     @Override

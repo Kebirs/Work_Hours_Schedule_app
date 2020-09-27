@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -74,18 +75,16 @@ public class MainActivity extends AppCompatActivity {
         months_recycler_view.setLayoutManager(h_layout_manager);
         months_recycler_view.setItemAnimator(new DefaultItemAnimator());
 
-        // todo Recreate days in month format to a specific month with all days
 
-        Calendar c = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+        // Create list of days in OCTOBER 2020
+
+        Calendar c = new GregorianCalendar(2020, 9, 1);
         SimpleDateFormat m_format = new SimpleDateFormat("EEEE dd MMM", Locale.getDefault());
 
-        // int of max month days - days passed
-        int max_month_days = c.getActualMaximum(Calendar.DAY_OF_MONTH) - c.get(Calendar.DAY_OF_MONTH) + 1;
+        int max_month_days = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        // Create array of days in month, format: weekday-str/weekday-int, month
         ArrayList<String> all_days = new ArrayList<>();
 
-        // loop over days that left in month
         for (int i = 0; i < max_month_days; i++) {
             all_days.add(m_format.format(c.getTime()));
             c.add(Calendar.DAY_OF_MONTH, 1);
@@ -97,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
             VerticalModel v_model = new VerticalModel(max_month_days, all_days.get(i));
             vertical_layout_models.add(v_model);
         }
-        // todo #############################################################
-
 
 
         // Vertical Layout Design
@@ -106,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this, LinearLayoutManager.VERTICAL, false);
         days_recycler_view.setLayoutManager(v_layout_manager);
         days_recycler_view.setItemAnimator(new DefaultItemAnimator());
-        // Horizontal Adapter init
+
+        // Horizontal and Vertical Adapter init
         horizontal_layout_adapter = new HorizontalAdapter(MainActivity.this, horizontal_layout_models);
-        // Set Horizontal Adapter to RecyclerView
-        months_recycler_view.setAdapter(horizontal_layout_adapter);
-        // Vertical Adapter init
         vertical_layout_adapter = new VerticalAdapter(MainActivity.this, vertical_layout_models);
-        // Set Vertical Adapter to RecyclerView
+
+        // Set Horizontal and Vertical Adapter to RecyclerView
+        months_recycler_view.setAdapter(horizontal_layout_adapter);
         days_recycler_view.setAdapter(vertical_layout_adapter);
     }
 
