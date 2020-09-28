@@ -19,22 +19,13 @@ public class SingleMonthActivity extends MainActivity implements HorizontalAdapt
         days_recycler_view = findViewById(R.id.vertical_view);
 
         getAllMonths();
-
         getMonthAllDays();
-
         setHorizontalLayout();
-
         setVerticalLayout();
-
     }
 
     @Override
     public void on_month_click_to_new_activity(int position) {
         super.on_month_click_to_new_activity(position);
-    }
-
-        @Override
-    public void getMonthAllDays() {
-        super.getMonthAllDays();
     }
 }

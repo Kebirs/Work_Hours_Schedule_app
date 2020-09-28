@@ -1,24 +1,16 @@
 package com.example.workhoursschedule;
 
-import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.lang.reflect.Array;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -28,11 +20,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
+
 
 public class MainActivity extends AppCompatActivity implements HorizontalAdapter.OnMonthClickListener {
 
-    private static final String TAG = "siema";
     // Variable init
     RecyclerView months_recycler_view;
     RecyclerView days_recycler_view;
@@ -44,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
     // Vertical view
     ArrayList<VerticalModel> vertical_layout_models;
     VerticalAdapter vertical_layout_adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +50,8 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
         days_recycler_view = findViewById(R.id.vertical_view);
 
         getAllMonths();
-
         getMonthAllDays();
-
         setHorizontalLayout();
-
         setVerticalLayout();
     }
 
@@ -95,14 +82,11 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
     public void getAllMonths() {
         // Create String format with all months
         String[] months = new DateFormatSymbols().getMonths();
-
         // Create Integer Array for months
         int size_of_months_in_year = months.length;
         int[] number_of_months = (int[]) Array.newInstance(int.class, size_of_months_in_year);
-
         // Create List of all months as string
         List<String> monthsList = new ArrayList<String>(Arrays.asList(months));
-
         // ArrayList of months init
         horizontal_layout_models = new ArrayList<>();
         for (int i = 0; i < months.length; i++) {
@@ -114,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
 
     public void getMonthAllDays() {
         // Create list of days in OCTOBER 2020
-
         Calendar c = new GregorianCalendar(2020, 10, 1);
         SimpleDateFormat m_format = new SimpleDateFormat("EEEE dd MMM", Locale.getDefault());
 
@@ -134,15 +117,11 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
             VerticalModel v_model = new VerticalModel(max_month_days, all_days.get(i));
             vertical_layout_models.add(v_model);
         }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-
-        // Menu dialog init
         MenuItem item = menu.findItem(R.id.spinner);
 
         // Cast spinner dialog to menu
@@ -154,13 +133,10 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
         for (int i = thisYear; i >= thisYear - 1; i--) {
             years.add(Integer.toString(i));
         }
-
         // Add years to dropdown items adapter
         ArrayAdapter<String> years_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
-
         spinner.setAdapter(years_adapter);
         return true;
-
     }
 
     @Override
