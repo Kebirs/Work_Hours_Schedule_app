@@ -2,9 +2,8 @@
     <string name="app_name">Work Hours</string>
 
     <string-array name="spinner_list_item_array">
-        <item>2000</item>
-        <item>2001</item>
-        <item>2002</item>
+        <item>8</item>
+        <item>10</item>
     </string-array>
 
     <string name="test">Siema</string>

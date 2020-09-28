@@ -1,12 +1,18 @@
 package com.example.workhoursschedule;
 
+import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -24,7 +30,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HorizontalAdapter.OnMonthClickListener {
+
+    private static final String TAG = "siema";
     // Variable init
     RecyclerView months_recycler_view;
     RecyclerView days_recycler_view;
@@ -51,7 +59,40 @@ public class MainActivity extends AppCompatActivity {
         months_recycler_view = findViewById(R.id.horizontal_view);
         days_recycler_view = findViewById(R.id.vertical_view);
 
+        getAllMonths();
 
+        getMonthAllDays();
+
+        setHorizontalLayout();
+
+        setVerticalLayout();
+    }
+
+    public void setVerticalLayout() {
+        // Vertical Layout Design
+        LinearLayoutManager v_layout_manager = new LinearLayoutManager(
+                MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        days_recycler_view.setLayoutManager(v_layout_manager);
+        days_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        // Vertical Adapter init
+        vertical_layout_adapter = new VerticalAdapter(MainActivity.this, vertical_layout_models);
+        // Set Vertical Adapter to RecyclerView
+        days_recycler_view.setAdapter(vertical_layout_adapter);
+    }
+
+    public void setHorizontalLayout() {
+        // Horizontal Layout Design
+        LinearLayoutManager h_layout_manager = new LinearLayoutManager(
+                MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        months_recycler_view.setLayoutManager(h_layout_manager);
+        months_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        // Horizontal Adapter init
+        horizontal_layout_adapter = new HorizontalAdapter(MainActivity.this, horizontal_layout_models, this);
+        // Set Horizontal and Vertical Adapter to RecyclerView
+        months_recycler_view.setAdapter(horizontal_layout_adapter);
+    }
+
+    public void getAllMonths() {
         // Create String format with all months
         String[] months = new DateFormatSymbols().getMonths();
 
@@ -68,17 +109,13 @@ public class MainActivity extends AppCompatActivity {
             HorizontalModel h_model = new HorizontalModel(number_of_months[i], monthsList.get(i));
             horizontal_layout_models.add(h_model);
         }
-
-        // Horizontal Layout Design
-        LinearLayoutManager h_layout_manager = new LinearLayoutManager(
-                MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        months_recycler_view.setLayoutManager(h_layout_manager);
-        months_recycler_view.setItemAnimator(new DefaultItemAnimator());
+    }
 
 
+    public void getMonthAllDays() {
         // Create list of days in OCTOBER 2020
 
-        Calendar c = new GregorianCalendar(2020, 9, 1);
+        Calendar c = new GregorianCalendar(2020, 10, 1);
         SimpleDateFormat m_format = new SimpleDateFormat("EEEE dd MMM", Locale.getDefault());
 
         int max_month_days = c.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -92,25 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Add item position and item name as string to a vertical model
         vertical_layout_models = new ArrayList<>();
+
         for (int i = 0; i < max_month_days; i++) {
             VerticalModel v_model = new VerticalModel(max_month_days, all_days.get(i));
             vertical_layout_models.add(v_model);
         }
 
-
-        // Vertical Layout Design
-        LinearLayoutManager v_layout_manager = new LinearLayoutManager(
-                MainActivity.this, LinearLayoutManager.VERTICAL, false);
-        days_recycler_view.setLayoutManager(v_layout_manager);
-        days_recycler_view.setItemAnimator(new DefaultItemAnimator());
-
-        // Horizontal and Vertical Adapter init
-        horizontal_layout_adapter = new HorizontalAdapter(MainActivity.this, horizontal_layout_models);
-        vertical_layout_adapter = new VerticalAdapter(MainActivity.this, vertical_layout_models);
-
-        // Set Horizontal and Vertical Adapter to RecyclerView
-        months_recycler_view.setAdapter(horizontal_layout_adapter);
-        days_recycler_view.setAdapter(vertical_layout_adapter);
     }
 
 
@@ -132,11 +156,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Add years to dropdown items adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
+        ArrayAdapter<String> years_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
 
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(years_adapter);
         return true;
 
     }
 
+    @Override
+    public void on_month_click_to_new_activity(int position) {
+
+        Intent intent = new Intent(this, SingleMonthActivity.class);
+        startActivity(intent);
+    }
 }

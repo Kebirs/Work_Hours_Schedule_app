@@ -32,7 +32,7 @@ public class VerticalAdapter extends RecyclerView.Adapter<VerticalAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView1.setText((CharSequence) vertical_layout_models.get(position).getDaysNames());
+        holder.textView1.setText(vertical_layout_models.get(position).getDaysNames());
     }
 
     @Override

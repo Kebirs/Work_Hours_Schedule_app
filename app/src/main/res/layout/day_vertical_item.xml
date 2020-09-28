@@ -22,11 +22,12 @@
             android:textStyle="bold"/>
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/v_spinner"
             android:layout_width="40dp"
             android:layout_height="53dp"
             android:layout_gravity="end"
-            android:layout_marginTop="-45dp" />
+            android:layout_marginTop="-45dp"
+            android:entries="@array/spinner_list_item_array" />
 
         <TextView
             android:layout_width="match_parent"

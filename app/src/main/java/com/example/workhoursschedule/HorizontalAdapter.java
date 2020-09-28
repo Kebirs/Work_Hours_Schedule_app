@@ -7,18 +7,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.ViewHolder> {
+public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.ViewHolder>{
     ArrayList<HorizontalModel> horizontal_layout_models;
     Context context;
+    OnMonthClickListener on_month_click_listener;
 
 
-    public HorizontalAdapter(Context context, ArrayList<HorizontalModel> horizontalModels) {
+    public HorizontalAdapter(Context context, ArrayList<HorizontalModel> horizontal_layout_models, OnMonthClickListener on_month_click_listener) {
         this.context = context;
-        this.horizontal_layout_models = horizontalModels;
+        this.horizontal_layout_models = horizontal_layout_models;
+        this.on_month_click_listener = on_month_click_listener;
     }
 
 
@@ -28,28 +31,43 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
         // Create View
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.month_horizontal_item, parent, false);
-        return new ViewHolder(view);
+
+
+        return new ViewHolder(view, on_month_click_listener);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textView.setText(horizontal_layout_models.get(position).getMonthNames());
-        holder.itemView.setOnClickListener(v -> {holder.textView.setText(R.string.test);});
+//        holder.textView.setOnClickListener(v -> {});
     }
+
 
     @Override
     public int getItemCount() {
         return horizontal_layout_models.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        // Variable init
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         TextView textView;
-        public ViewHolder(@NonNull View itemView) {
+        OnMonthClickListener month_click_listener;
+        public ViewHolder(@NonNull View itemView, OnMonthClickListener month_click_listener) {
             super(itemView);
-            // Assign variable
-            textView = itemView.findViewById(R.id.text_view);
+            textView = itemView.findViewById(R.id.certain_month_text_view);
+            this.month_click_listener = month_click_listener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            month_click_listener.on_month_click_to_new_activity(getAdapterPosition());
+        }
+    }
+
+    public interface OnMonthClickListener{
+        void on_month_click_to_new_activity(int position);
     }
 }
