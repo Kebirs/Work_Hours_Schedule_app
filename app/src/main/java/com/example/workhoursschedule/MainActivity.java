@@ -1,16 +1,29 @@
 package com.example.workhoursschedule;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -22,7 +35,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements HorizontalAdapter.OnMonthClickListener {
+public class MainActivity extends AppCompatActivity implements HorizontalAdapter.OnMonthClickListener{
 
     // Variable init
     RecyclerView months_recycler_view;
@@ -53,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
         getMonthAllDays();
         setHorizontalLayout();
         setVerticalLayout();
-    }
+
+}
+
 
     public void setVerticalLayout() {
         // Vertical Layout Design
@@ -145,4 +160,5 @@ public class MainActivity extends AppCompatActivity implements HorizontalAdapter
         Intent intent = new Intent(this, SingleMonthActivity.class);
         startActivity(intent);
     }
+
 }

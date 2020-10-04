@@ -7,5 +7,6 @@
     </string-array>
 
     <string name="test">Siema</string>
+    <string name="total_hours">TOTAL HOURS: </string>
 
 </resources>

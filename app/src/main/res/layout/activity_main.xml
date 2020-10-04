@@ -11,8 +11,14 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
+    <include
+        android:id="@+id/v_spinner"
+        layout="@layout/day_vertical_item"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/horizontal_view"
+        android:background="#E8E8E8"
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_marginTop="55dp" />
@@ -21,7 +27,22 @@
         android:id="@+id/vertical_view"
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        android:layout_marginTop="102dp" />
+        android:layout_marginTop="102dp"/>
+
+    <TextView
+        android:id="@+id/hours_amount_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="652dp"
+        android:text="@string/total_hours"
+        android:textColor="@android:color/black"
+        android:background="#E8E8E8"
+        android:gravity="center"
+        android:paddingEnd="230dp"
+        android:paddingStart="0dp"
+        android:textSize="20sp"/>
 
 
 </RelativeLayout>
+
+

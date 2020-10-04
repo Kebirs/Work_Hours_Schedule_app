@@ -1,8 +1,6 @@
 package com.example.workhoursschedule;
 
 import android.os.Bundle;
-
-
 import androidx.appcompat.widget.Toolbar;
 
 public class SingleMonthActivity extends MainActivity implements HorizontalAdapter.OnMonthClickListener{
